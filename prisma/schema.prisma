@@ -20,6 +20,7 @@ model Patient{
     email String
     address String
     how_know_us String
+    medical_record MedicalRecord?
 }
 
 model User{
@@ -35,4 +36,10 @@ model User{
 model Sympthom{
   id Int @id @default(autoincrement())
   description String
+}
+
+model MedicalRecord{
+  id Int @id @default(autoincrement())
+  patiend_id Int @unique
+  patient Patient @relation(fields: [patiend_id],references: [id])
 }
