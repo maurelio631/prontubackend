@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -30,17 +30,17 @@ model User {
   password    String
   user_type   String
   user_code   String?
-  clinic_id Int 
+  clinic Clinic?
 }
 
-model Sympthom {
+model Sympthom { 
   id            Int             @id @default(autoincrement())
   cause         String
   discomforts   String
   frequency     String
   description   String
   type          String
-  medical_record String
+  medical_record MedicalRecord?
 }
 
 model MedicalRecord {
@@ -49,13 +49,14 @@ model MedicalRecord {
   disconfortable_areas String
   sympthoms             String
   patient    Patient @relation(fields: [patiend_id], references: [id])
-  sympthomId Int
+  sympthomId Sympthom @relation(fields:[sympthom_id],references: [id])
+  sympthom_id Int @unique
 }
 
 model Clinic {
   id Int @id @default(autoincrement())
   name String
   profile_picture String
-  user String
+  user User @relation(fields: [user_id],references: [id])
   user_id Int @unique
 }
