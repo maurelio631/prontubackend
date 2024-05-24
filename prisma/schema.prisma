@@ -10,36 +10,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Patient{
-    id Int @id @default(autoincrement())
-    name String
-    birth_date String
-    phone String
-    cpf String
-    profession String
-    email String
-    address String
-    how_know_us String
-    medical_record MedicalRecord?
+model Patient {
+  id             Int            @id @default(autoincrement())
+  name           String
+  birth_date     String
+  phone          String
+  cpf            String
+  profession     String
+  email          String
+  address        String
+  how_know_us    String
+  medical_record MedicalRecord?
 }
 
-model User{
+model User {
+  id          Int     @id @default(autoincrement())
+  name        String
+  email       String  @unique
+  password    String
+  user_type   String
+  user_code   String?
+  clinic_id Int 
+}
+
+model Sympthom {
+  id            Int             @id @default(autoincrement())
+  cause         String
+  discomforts   String
+  frequency     String
+  description   String
+  type          String
+  medical_record String
+}
+
+model MedicalRecord {
+  id                   Int      @id @default(autoincrement())
+  patiend_id           Int      @unique
+  disconfortable_areas String
+  sympthoms             String
+  patient    Patient @relation(fields: [patiend_id], references: [id])
+  sympthomId Int
+}
+
+model Clinic {
   id Int @id @default(autoincrement())
   name String
-  email String @unique
-  password String
-  user_type String
-  clinic_code String?
-  user_code String? 
-}
-
-model Sympthom{
-  id Int @id @default(autoincrement())
-  description String
-}
-
-model MedicalRecord{
-  id Int @id @default(autoincrement())
-  patiend_id Int @unique
-  patient Patient @relation(fields: [patiend_id],references: [id])
+  profile_picture String
+  user String
+  user_id Int @unique
 }
