@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Paciente {
-  
+model Paciente{
+    id Int @id @default(autoincrement())
+    name String
+    birth_date String
+    phone String
+    cpf String
+    profession String
+    email String
+    address String
+    how_know_us String
 }
+
