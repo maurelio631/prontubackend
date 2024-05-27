@@ -24,22 +24,23 @@ model Patient {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  name        String
-  email       String  @unique
-  password    String
-  user_type   String
-  user_code   String?
-  clinic Clinic?
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  profile_picture Bytes
+  password  String
+  user_type String
+  user_code String?
+  clinic    Clinic?
 }
 
-model Sympthom { 
-  id            Int             @id @default(autoincrement())
-  cause         String
-  discomforts   String
-  frequency     String
-  description   String
-  type          String
+model Sympthom {
+  id             Int            @id @default(autoincrement())
+  cause          String
+  discomforts    String
+  frequency      String
+  description    String
+  type           String
   medical_record MedicalRecord?
 }
 
@@ -47,16 +48,16 @@ model MedicalRecord {
   id                   Int      @id @default(autoincrement())
   patiend_id           Int      @unique
   disconfortable_areas String
-  sympthoms             String
-  patient    Patient @relation(fields: [patiend_id], references: [id])
-  sympthomId Sympthom @relation(fields:[sympthom_id],references: [id])
-  sympthom_id Int @unique
+  sympthoms            String
+  patient              Patient  @relation(fields: [patiend_id], references: [id])
+  sympthomId           Sympthom @relation(fields: [sympthom_id], references: [id])
+  sympthom_id          Int      @unique
 }
 
 model Clinic {
-  id Int @id @default(autoincrement())
-  name String
-  profile_picture String
-  user User @relation(fields: [user_id],references: [id])
-  user_id Int @unique
+  id              Int    @id @default(autoincrement())
+  name            String
+  profile_picture Bytes
+  user            User   @relation(fields: [user_id], references: [id])
+  user_id         Int    @unique
 }
